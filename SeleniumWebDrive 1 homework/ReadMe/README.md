@@ -10,4 +10,4 @@
  @BeforeAll
     public static void classSetup() {
 
-        driver = startBrowser(BrowserType.FIREFOX);   <------- Here
+        driver = startBrowser(BrowserType.FIREFOX);   <------- Here!
