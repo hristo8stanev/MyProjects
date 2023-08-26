@@ -6,6 +6,7 @@ public class Constants {
     public static final String GOOGLE_URL = "https://google.com";
     public static final String TELERIK_ACADEMY = "Telerik Academy Alpha";
     public static final String BING_URL = "https://www.bing.com/";
+    public static final String SAUCE_URL = "https://www.saucedemo.com/";
     public static final String EXPECTED_RESULT_BING = "Telerik Academy Alpha - IT Career Start in 6 Months";
 
 }
