@@ -1,0 +1,16 @@
+2023-09-01 18:23:51,614 INFO  [main] Initializing WebDriver
+2023-09-01 18:23:57,588 INFO  [main] Initializing WebDriver
+2023-09-01 18:24:00,933 INFO  [main] Initializing WebDriver
+2023-09-01 18:24:03,172 INFO  [main] Clicking on element trello.loginPage.loginButton
+2023-09-01 18:24:06,738 INFO  [main] Clicking on element trello.loginPage.loginSubmitButton
+2023-09-01 18:24:12,523 INFO  [main] Initializing WebDriver
+2023-09-01 18:24:12,579 INFO  [main] Clicking on element trello.header.create.menuButton
+2023-09-01 18:24:12,924 INFO  [main] Clicking on element trello.header.createBoard.dropDownButton
+2023-09-01 18:24:13,762 INFO  [main] Clicking on element trello.create.board.submitButton
+2023-09-01 18:24:13,913 INFO  [main] Initializing WebDriver
+2023-09-01 18:24:17,148 INFO  [main] Clicking on element trello.showMenu
+2023-09-01 18:24:17,598 INFO  [main] Clicking on element trello.icon.remove
+2023-09-01 18:24:18,141 INFO  [main] Clicking on element trello.icon.submit.button
+2023-09-01 18:24:18,421 INFO  [main] Clicking on element trello.board.icon
+2023-09-01 18:24:19,536 INFO  [main] Clicking on element trello.empty.board
+2023-09-01 18:24:19,646 INFO  [main] Quitting WebDriver
