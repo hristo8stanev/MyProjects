@@ -1,0 +1,18 @@
+
+Plesea start the test one by one 
+
+1.BEFORE START PLEASE FILLS 
+
+jira.homePage=
+jira.loginPage=
+jira.users.user.email=
+jira.users.user.password=
+
+
+2. FILLS WITH YOUR JIRA SOFTWARE ID:
+jira.loginPage.projectButton=//div[@data-testid='start-product__JIRA_SOFTWARE_9645b08e-f41f-4496-bb1d-7ec7fcaa19e4']
+
+3. FILLS WITH YOUR JIRA PROJECT NAME
+
+jira.projectName= x-ray-project-demo
+jira.findProjectNameByText=  //span[text()='x-ray-project-demo']   
