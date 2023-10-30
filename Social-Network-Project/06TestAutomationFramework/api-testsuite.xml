@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="API Tests Suite">
+    <test verbose="2" preserve-order="true"
+          name="C:/Users/timda/OneDrive/Desktop/Uploads/T-H-K/TestAutomationFramework/src/test/java/api/socialnetwork/tests">
+        <classes>
+            <class name="api.socialnetwork.tests.RegistrationTest"/>
+            <class name="api.socialnetwork.tests.UserControllerTest"/>
+            <class name="api.socialnetwork.tests.SkillsControllerTest"/>
+            <class name="api.socialnetwork.tests.ConnectionControllerTest"/>
+            <class name="api.socialnetwork.tests.PostControllerTest"/>
+            <class name="api.socialnetwork.tests.CommentsControllerTest"/>
+        </classes>
+    </test>
+</suite>

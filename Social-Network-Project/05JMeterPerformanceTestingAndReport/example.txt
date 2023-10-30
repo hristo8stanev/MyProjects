@@ -1,0 +1,3 @@
+jmeter -n -t "C:\Users\K.Kochev\Desktop\reportJMeter\Weare.jmx" 
+-l "C:\Users\K.Kochev\Desktop\reportJMeter\Report3.csv" 
+-e -o "C:\Users\K.Kochev\Desktop\reportJMeter\ReportFolderJMeter"
