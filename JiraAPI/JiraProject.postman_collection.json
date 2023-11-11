@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "4cc0c093-429b-4f88-bddb-c4984e84d8ae",
+		"name": "JiraProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25524140",
+		"_collection_link": "https://grey-astronaut-9811.postman.co/workspace/Alpha50~adbbd60a-9241-4af8-a01e-ae3448366c0a/collection/25524140-4cc0c093-429b-4f88-bddb-c4984e84d8ae?action=share&source=collection_link&creator=25524140"
+	},
+	"item": [
+		{
+			"name": "Create Story",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Id returned in response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.not.null;\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData.key);\r",
+							"pm.collectionVariables.set(\"storyKey\",jsonData.key);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"{{projectKey}}\"\r\n        },\r\n        \"summary\": \"{{summaryKey}\",\r\n        \"description\": {\r\n            \"type\": \"doc\",\r\n            \"version\": 1,\r\n            \"content\": [\r\n                {\r\n                    \"type\": \"paragraph\",\r\n                    \"content\": [\r\n                        {\r\n                            \"type\": \"text\",\r\n                            \"text\": \"This story is about allowing users to change the site language from English to German. Users should have the option to switch the language using a language switcher in the upper-right corner of the website.When the user clicks on the English flag, a dropdown menu with language options should appear,and the user can select the German flag from the dropdown menu. Upon selecting German, the website's URL should change to'https: //phptravels.net/de,' indicating the change to the German language version. Additionally, the flag icon in the language switcher should change from the English flag to the German flag.Users have reported that even after selecting German, the site's information remains in English, and this issue needs to be fixed to provide a seamless language switch experience for users.\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        \"issuetype\": {\r\n            \"name\": \"Story\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}rest/api/3/issue/",
+					"host": [
+						"{{baseURL}}rest"
+					],
+					"path": [
+						"api",
+						"3",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create  BUG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData.key);\r",
+							"pm.collectionVariables.set(\"bugKey\",jsonData.key);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"{{projectKey}}\"\r\n        },\r\n        \"summary\": \"{{bugSummary}}\",\r\n        \"description\": \"Description\\n This test case verifies that the user can successfully change the language of the travel site from English to German.\\n \\n Prerequisites:\\n 1.Browser: Mozilla Firefox Version 90.0 (64-bit)\\n 2.Operating System: Windows 10 Pro Version 21H1\\n \\n Steps to Reproduce:\\n 1.Open the Mozilla browser.\\n 2.Navigate to the website: \\n 3.Look for the language switcher in the upper-right corner of the page (represented by a flag icon).\\n 4.Click on the English flag to open the language dropdown menu.\\n 5.Choose the German flag from the dropdown menu.\\n 6.English flag is changed to the German flag.\\n \\n Expected Results:\\n 1.When the user clicks on the English flag, a dropdown menu with language options appears.\\n 2.The user selects the German flag from the dropdown menu.\\n 3.The website's URL changes to https: //phptravels.net/de, indicating the change to the German language version.\\n 4.The flag icon in the language switcher changes from the English flag to the German flag\\n \\n Actual Result:\\n 1.The whole information on the site is still in the English language.\\n \\n Additional Info:\\n 1.The bug is reproducible on multiple machines with the same browser and operating system.\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        },\r\n        \"environment\": \"Mozilla Firefox\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/rest/api/2/issue",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Link the  STORY AND BUG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"There is no response body\",function() {\r",
+							"    var res = (_.isEmpty(pm.response.body));\r",
+							"    pm.expect(res).to.be.true\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response body is empty\",function () {\r",
+							"    pm.response.to.not.be.withBody;\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"update\": {\r\n        \"issuelinks\": [\r\n            {\r\n                \"add\": {\r\n                    \"type\": {\r\n                        \"name\": \"Blocks\",\r\n                        \"inward\": \"is blocked by\",\r\n                        \"outward\": \"blocks\"\r\n                    },\r\n                    \"inwardIssue\": {\r\n                        \"key\": \"{{storyKey}}\"\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/rest/api/2/issue/{{bugKey}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{bugKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attachments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check mimeType\",function() {\r",
+							"    var jsonData  = pm.response.json();\r",
+							"    pm.expect(jsonData[0].mimeType).to.eql(\"image/jpeg\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Atlassian-Token",
+						"value": "nocheck",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/xstan/OneDrive/Desktop/Germany.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/rest/api/2/issue/{{bugKey}}/attachments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{bugKey}}",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set a priority",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There is no response body\",function() {\r",
+							"    var res = (_.isEmpty(pm.response.body));\r",
+							"    pm.expect(res).to.be.true\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response body is empty\",function () {\r",
+							"    pm.response.to.not.be.withBody;\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"priority\": {\r\n            \"name\": \"{{priority}}\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/rest/api/2/issue/{{storyKey}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{storyKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user via email (accountId)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function() {\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check emailAddress\",function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].emailAddres).to.eql(pm.collectionVariables.get(\"email\"));\r",
+							"});\r",
+							" \r",
+							" var jsonData = pm.response.json();\r",
+							" console.log(jsonData[0].accountId);\r",
+							" pm.collectionVariables.set(accountId,jsonData[0].accountId)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/rest/api/2/user/search?query={{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"user",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{email}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set an assignee by accountId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\",function(){\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There is no response body\",function(){\r",
+							"var res = (_.isEmpty(pm.response.body));\r",
+							"pm.expect(res).to.be.true\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\":  {\r\n        \"assignee\": {\r\n            \"accountId\":\"{{accountId}}\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/rest/api/2/issue/{{storyKey}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{storyKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  transition per story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"var bodyData = response.transitions;\r",
+							"console.log(bodyData);\r",
+							"\r",
+							"bodyData.forEach(function(transitions){\r",
+							"    if(transitions.name === \"In Progress\") {\r",
+							"        console.log(transitions.id);\r",
+							"        pm.collectionVariables.set(\"InProgressTransitionId\",transitions.id)}\r",
+							"});\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/rest/api/2/issue/{{storyKey}}/transitions",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{storyKey}}",
+						"transitions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change transitions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\",function(){\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There is no response body\",function(){\r",
+							"    var res = (_.isEmpty(pm.response.body));\r",
+							"pm.expect(res).to.be.true\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"transition\":{ \r\n        \"id\": \"{{InProgressTransitionId}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/rest/api/2/issue/{{storyKey}}/transitions",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{storyKey}}",
+						"transitions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{api_key}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "xstanev97@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": "xstanev97@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "baseURL",
+			"value": "https://test-telerik.atlassian.net/",
+			"type": "string"
+		},
+		{
+			"key": "projectKey",
+			"value": "XRPD",
+			"type": "string"
+		},
+		{
+			"key": "priority",
+			"value": "Medium"
+		},
+		{
+			"key": "bugKey",
+			"value": "XRPD-56",
+			"type": "string"
+		},
+		{
+			"key": "bugSummary",
+			"value": "User Cannot Change Site Language from English to German",
+			"type": "string"
+		},
+		{
+			"key": "summaryKey",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "storyKey",
+			"value": "XRPD-90",
+			"type": "string"
+		},
+		{
+			"key": "accountId",
+			"value": "639f07a1347fae5346813287",
+			"type": "string"
+		},
+		{
+			"key": "InProgressTransitionId",
+			"value": "21"
+		}
+	]
+}
