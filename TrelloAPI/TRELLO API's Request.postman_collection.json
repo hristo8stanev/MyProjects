@@ -1,0 +1,553 @@
+{
+	"info": {
+		"_postman_id": "ec2a805a-1ab0-440c-af2f-6196bb2d930b",
+		"name": "TRELLO API's Request",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25524140",
+		"_collection_link": "https://grey-astronaut-9811.postman.co/workspace/Alpha50~adbbd60a-9241-4af8-a01e-ae3448366c0a/collection/25524140-ec2a805a-1ab0-440c-af2f-6196bb2d930b?action=share&source=collection_link&creator=25524140"
+	},
+	"item": [
+		{
+			"name": "Test Trello Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API key is not empty\", function() {\r",
+							"    var apiKey = pm.variables.get(\"API_KEY_TRELLO\"); \r",
+							"    pm.expect(apiKey).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API token is not empty\", function() {\r",
+							"    var apiToken = pm.variables.get(\"API_TOKEN_TRELLO\");\r",
+							"    pm.expect(apiToken).not.to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/members/me?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"members",
+						"me"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Board ID is present\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.not.be.empty;\r",
+							"\r",
+							" pm.environment.set(\"BOARD_ID\", jsonData.id);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Board name is correct\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"MyFirstTrello1\"); \r",
+							"});\r",
+							" \r",
+							" pm.test(\"verify that 'permissionLevel' value is private \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.prefs.permissionLevel).to.eql(\"private\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/boards/?name={{BOARD_NAME}}1&key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{BOARD_NAME}}1"
+						},
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{GET_BOARD_URL}}boards?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{GET_BOARD_URL}}boards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"List ID is present\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.not.be.empty;\r",
+							"\r",
+							"    pm.environment.set(\"LIST_ID\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"List name is correct\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"This is my first Trello List\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/lists?name={{LIST_NAME}}&idBoard={{BOARD_ID}}&key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{LIST_NAME}}"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{BOARD_ID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Card ID is present\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.not.be.empty;\r",
+							"\r",
+							"    pm.environment.set(\"CARD_ID\", jsonData.id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/cards?idList={{LIST_ID}}&key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{LIST_ID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/{{CARDS}}/{{CARD_ID}}?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"{{CARDS}}",
+						"{{CARD_ID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Color",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Change the color of card\",\r\n\r\n  \"cover\": {\r\n      \"color\": \"{{Color}}\",\r\n      \"brightness\": \"light\"\r\n  },\r\n\r\n  \"key\": \"{{API_KEY_TRELLO}}\",\r\n\r\n  \"token\": \"{{API_TOKEN_TRELLO}}\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/1/{{CARDS}}/{{CARD_ID}}?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"{{CARDS}}",
+						"{{CARD_ID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check if _value is null\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._value).to.be.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/boards/{{BOARD_ID}}?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{BOARD_ID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check the board is deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\",function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/1/boards/{{BOARD_ID}}?key={{API_KEY_TRELLO}}&token={{API_TOKEN_TRELLO}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{BOARD_ID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{API_KEY_TRELLO}}"
+						},
+						{
+							"key": "token",
+							"value": "{{API_TOKEN_TRELLO}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "ATTAbeb958ccc4e3ae292db89572b50ab657f4138acfe389fe753aebd4661097c2d3BB6ABE80",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "xstanev97@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_TOKEN_TRELLO",
+			"value": "ATTAbeb958ccc4e3ae292db89572b50ab657f4138acfe389fe753aebd4661097c2d3BB6ABE80"
+		},
+		{
+			"key": "API_KEY_TRELLO",
+			"value": "b6e021a39a99d7785d058211a763a125"
+		},
+		{
+			"key": "BOARD_NAME",
+			"value": "MyFirstTrello",
+			"type": "string"
+		},
+		{
+			"key": "BOARD_ID",
+			"value": "64d7a0f00397872a6d7dfe27"
+		},
+		{
+			"key": "LIST_NAME",
+			"value": "This is my first Trello List"
+		},
+		{
+			"key": "CARD_NAME",
+			"value": "My first Card\n",
+			"type": "string"
+		},
+		{
+			"key": "CARD_ID",
+			"value": "64d79d8abd9af462ad529b74",
+			"type": "string"
+		},
+		{
+			"key": "UPDATED_CARD_NAME",
+			"value": "My first CARD Update",
+			"type": "string"
+		},
+		{
+			"key": "UPDATED_CARD_DESCRIPTION",
+			"value": "My goals is to update my first CARD",
+			"type": "string"
+		},
+		{
+			"key": "CARDS",
+			"value": "cards"
+		},
+		{
+			"key": "Color",
+			"value": "green",
+			"type": "string"
+		},
+		{
+			"key": "LIST_ID",
+			"value": "64d79fab50454e8cd9ccf3e8",
+			"type": "string"
+		}
+	]
+}
